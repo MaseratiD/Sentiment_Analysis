@@ -1,7 +1,7 @@
 # coding: UTF-8
 import torch
-from tqdm import tqdm
 import time
+from tqdm import tqdm
 from datetime import timedelta
 
 PAD, CLS = '[PAD]', '[CLS]'  # padding符号, bert中综合信息符号
