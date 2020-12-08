@@ -10,7 +10,7 @@ class Config(object):
         self.train_data = dataDir + '/train.txt'  # 训练集
         self.dev_data = dataDir + '/dev.txt'  # 验证集
         self.text_data = dataDir + '/test.txt'  # 测试集
-        self.class_list = [x.strip() for x in open(dataDir + '/class.txt').readlines()]  # label类别（几分类）
+        self.class_list = [x.strip() for x in open(dataDir + '/class.txt').readlines()]   # label类别（几分类）
         self.save_model_path = 'trainedModel/' + self.model_name + '.pkl'  # 存储训练好的模型
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  # 设备使用
 
@@ -19,7 +19,7 @@ class Config(object):
         self.batch_size = 128  # mini-batch的大小
         self.hidden_size = 768  # 隐层大小
         self.learning_rate = 5e-5  # 学习率
-        self.num_epochs = 3  # epoch数
+        self.num_epochs = 5  # epoch数
         self.require_improve = 1000  # 若超过1000 batch仍无提升，则提前结束
 
         self.bert_SourceCode_path = './bert_SourceCode'  # bert源码
@@ -36,10 +36,10 @@ class Model(nn.Module):
             param.requires_grad = True
         self.shape = nn.Linear(config.hidden_size, config.num_classes)
 
-    def forward(self, input):
-        content = input[0]
-        label = input[1]
-        mask = input[2]
+    def forward(self, x):
+        content = x[0]
+        label = x[1]
+        mask = x[2]
         _, pooled = self.bert(content, attention_mask=mask, output_all_encoded_layers=False)
         out = self.shape(pooled)
         return out

@@ -36,10 +36,10 @@ class Model(nn.Module):
             param.requires_grad = True
         self.shape = nn.Linear(config.hidden_size, config.num_classes)
 
-    def forward(self, input):
-        content = input[0]
-        label = input[1]
-        mask = input[2]
+    def forward(self, x):
+        content = x[0]
+        label = x[1]
+        mask = x[2]
         _, pooled = self.bert(content, attention_mask=mask, output_all_encoded_layers=False)
         out = self.shape(pooled)
         return out
