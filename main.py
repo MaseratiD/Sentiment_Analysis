@@ -1,10 +1,9 @@
 # coding: UTF-8
 import torch
 import numpy as np
+import argparse
 from importlib import import_module
 from loadDataset import loadDataset
-import argparse
-
 from train_eval import train, test
 
 parser = argparse.ArgumentParser(description='Chinese Text Classification')
