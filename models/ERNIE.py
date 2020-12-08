@@ -34,12 +34,12 @@ class Model(nn.Module):
         self.bert = BertModel.from_pretrained(config.pretrainedModel_path)
         for param in self.bert.parameters():
             param.requires_grad = True
-        self.shape = nn.Linear(config.hidden_size, config.num_classes)
+        self.fc = nn.Linear(config.hidden_size, config.num_classes)
 
     def forward(self, x):
         content = x[0]
         label = x[1]
         mask = x[2]
         _, pooled = self.bert(content, attention_mask=mask, output_all_encoded_layers=False)
-        out = self.shape(pooled)
+        out = self.fc(pooled)
         return out
