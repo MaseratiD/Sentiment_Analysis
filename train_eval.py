@@ -1,6 +1,5 @@
 import time
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 from sklearn import metrics
@@ -8,6 +7,7 @@ from loadDataset import cost_Time
 from bert_SourceCode.optimization import BertAdam
 
 
+# 模型训练
 def train(config, model, train_iter, dev_iter):
     start_time = time.time()
     model.train()
@@ -58,6 +58,7 @@ def train(config, model, train_iter, dev_iter):
             break
 
 
+# 模型评估
 def evaluate(config, model, data_iter, test=False):
     model.eval()
     loss_total = 0
@@ -81,6 +82,7 @@ def evaluate(config, model, data_iter, test=False):
     return acc, avg_loss
 
 
+# 模型测试
 def test(config, model, data_iter):
     model.load_state_dict(torch.load(config.save_model_path))
     model.eval()
